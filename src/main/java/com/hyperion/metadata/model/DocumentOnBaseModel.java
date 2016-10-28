@@ -1,13 +1,12 @@
 package com.hyperion.metadata.model;
 
-
-import org.springframework.data.mongodb.core.mapping.Document;
-
+import org.springframework.data.annotation.Id;
 import java.util.Date;
 
-@Document(collection = "onbase")
 public class DocumentOnBaseModel {
 
+    @Id
+    private String id;
     private String policyNumber;
     private String accountNumber;
     private String policyPeriodId;
