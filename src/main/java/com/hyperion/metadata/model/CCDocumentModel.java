@@ -8,7 +8,7 @@ import java.util.Date;
 public class CCDocumentModel {
 
     @Id
-    private Long docID;
+    private int docID;
     private String claimNumber;
     private String claimId;
     private String author;
@@ -19,7 +19,41 @@ public class CCDocumentModel {
     private Date createdDate;
     private Date modifiedDate;
     private String[] contacts;
-    //Incident , Exposures
+    private String guidEnvelopeId;
+
+    public String getGuidEnvelopeId() {
+        return guidEnvelopeId;
+    }
+
+    public void setGuidEnvelopeId(String guidEnvelopeId) {
+        this.guidEnvelopeId = guidEnvelopeId;
+    }
+
+    public String getClaimId() {
+        return claimId;
+    }
+
+    public void setClaimId(String claimId) {
+        this.claimId = claimId;
+    }
+
+    public String[] getIncident() {
+        return incident;
+    }
+
+    public void setIncident(String[] incident) {
+        this.incident = incident;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    private String[] incident;
     private String source;
 
     public String getClaimNumber() {
@@ -32,11 +66,11 @@ public class CCDocumentModel {
 
     public CCDocumentModel(){}
 
-    public Long getDocID() {
+    public int getDocID() {
         return docID;
     }
 
-    public void setDocID(Long docID) {
+    public void setDocID(int docID) {
         this.docID = docID;
     }
 
