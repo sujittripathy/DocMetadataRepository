@@ -2,59 +2,38 @@ package com.hyperion.metadata.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-@Document(collection = "claims")
-public class CCDocumentModel {
+@Document(collection = "policy")
+public class PCDocumentModel {
 
     @Id
     private int docID;
-    private String claimNumber;
-    private String claimId;
+    private String accountNumber;
+    private String accountId;
     private String author;
     private String documenttype;
     private String documenttypegroup;
     private String mimetype;
+    @Field(value = "documentname")
     private String name;
+    private String policyNumber;
+    private String policyPeriodId;
+    private String securitytype;
     private Date createdDate;
     private Date modifiedDate;
-    private String[] contacts;
-    private List<Incident> incidents;
-    private String matter;
     private String source;
-
-    public CCDocumentModel(){}
-
-    public static class Incident{
-        int incidentId;
-        String incidentName;
-        Map<Integer,String> exposureMap = new HashMap<>();
-        public Incident(int id,String name, Map exposureMap){
-            this.incidentId = id;
-            this.incidentName = name;
-            this.exposureMap = exposureMap;
-        }
-    }
-    public String getMatter() {
-        return matter;
-    }
-
-    public void setMatter(String matter) {
-        this.matter = matter;
-    }
-
-    public List<Incident> getIncidents() {
-        return incidents;
-    }
-
-    public void setIncidents(List<Incident> incidents) {
-        this.incidents = incidents;
-    }
-
     private String guidEnvelopeId;
+    private int batchId;
+
+    public int getBatchId() {
+        return batchId;
+    }
+
+    public void setBatchId(int batchId) {
+        this.batchId = batchId;
+    }
 
     public String getGuidEnvelopeId() {
         return guidEnvelopeId;
@@ -64,15 +43,6 @@ public class CCDocumentModel {
         this.guidEnvelopeId = guidEnvelopeId;
     }
 
-    public String getClaimId() {
-        return claimId;
-    }
-
-    public void setClaimId(String claimId) {
-        this.claimId = claimId;
-    }
-
-
     public String getSource() {
         return source;
     }
@@ -81,13 +51,7 @@ public class CCDocumentModel {
         this.source = source;
     }
 
-    public String getClaimNumber() {
-        return claimNumber;
-    }
-
-    public void setClaimNumber(String claimNumber) {
-        this.claimNumber = claimNumber;
-    }
+    public PCDocumentModel(){}
 
     public int getDocID() {
         return docID;
@@ -95,6 +59,22 @@ public class CCDocumentModel {
 
     public void setDocID(int docID) {
         this.docID = docID;
+    }
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
     }
 
     public String getAuthor() {
@@ -137,6 +117,30 @@ public class CCDocumentModel {
         this.name = name;
     }
 
+    public String getPolicyNumber() {
+        return policyNumber;
+    }
+
+    public void setPolicyNumber(String policyNumber) {
+        this.policyNumber = policyNumber;
+    }
+
+    public String getPolicyPeriodId() {
+        return policyPeriodId;
+    }
+
+    public void setPolicyPeriodId(String policyPeriodId) {
+        this.policyPeriodId = policyPeriodId;
+    }
+
+    public String getSecuritytype() {
+        return securitytype;
+    }
+
+    public void setSecuritytype(String securitytype) {
+        this.securitytype = securitytype;
+    }
+
     public Date getCreatedDate() {
         return createdDate;
     }
@@ -153,11 +157,4 @@ public class CCDocumentModel {
         this.modifiedDate = modifiedDate;
     }
 
-    public String[] getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(String[] contacts) {
-        this.contacts = contacts;
-    }
 }

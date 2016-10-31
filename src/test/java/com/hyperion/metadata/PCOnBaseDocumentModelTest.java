@@ -1,7 +1,7 @@
 package com.hyperion.metadata;
 
-import com.hyperion.metadata.model.PC_BC_DocumentModel;
-import com.hyperion.metadata.repository.PC_BC_DocumentRepo;
+import com.hyperion.metadata.model.PCDocumentModel;
+import com.hyperion.metadata.repository.PCDocumentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +16,14 @@ import java.util.UUID;
 public class PCOnBaseDocumentModelTest {
 
     @Autowired
-    PC_BC_DocumentRepo documentRepo;
+    PCDocumentRepository documentRepo;
 
     @Test
     public void addDocumentMetadata(){
-        int i = 1000000100;
+        int i = 1000000000;
         Random random=new Random();
         do{
-           PC_BC_DocumentModel doc = new PC_BC_DocumentModel();
+           PCDocumentModel doc = new PCDocumentModel();
             doc.setDocID(random.nextInt(Integer.MAX_VALUE)+1);
             doc.setAccountNumber("A"+i);
             doc.setAccountId("pc:"+i);
@@ -44,7 +44,7 @@ public class PCOnBaseDocumentModelTest {
             documentRepo.save(doc);
             System.out.println("Document Added Successfully: "+i);
             i++;
-        }while(i<=1000000101);
+        }while(i<=1000001000);
 
     }
 }

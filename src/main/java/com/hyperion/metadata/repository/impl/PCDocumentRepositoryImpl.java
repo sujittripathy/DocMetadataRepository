@@ -1,22 +1,22 @@
 package com.hyperion.metadata.repository.impl;
 
-import com.hyperion.metadata.model.PC_BC_DocumentModel;
-import com.hyperion.metadata.repository.DocumentRepositoryCustom;
+import com.hyperion.metadata.model.PCDocumentModel;
+import com.hyperion.metadata.repository.PCDocumentCustomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import java.util.List;
 
-public class PC_BC_DocumentRepoImpl implements DocumentRepositoryCustom {
+public class PCDocumentRepositoryImpl implements PCDocumentCustomRepository {
 
     @Autowired
     private MongoOperations mongoOperations;
 
-    public List<PC_BC_DocumentModel> findDocumentByType(String type){
-        Criteria criteria = Criteria.where("documenttype").is(type);
+    public List<PCDocumentModel> findDocumentOnCriteria(String key,String value){
+        Criteria criteria = Criteria.where(key).is(value);
         Query query=Query.query(criteria);
-        return mongoOperations.find(query,PC_BC_DocumentModel.class);
+        return mongoOperations.find(query,PCDocumentModel.class);
     }
 
 }

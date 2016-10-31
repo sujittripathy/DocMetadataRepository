@@ -1,0 +1,96 @@
+package com.hyperion.metadata.controller;
+
+import com.hyperion.metadata.DocumentResponse;
+import com.hyperion.metadata.model.PCDocumentModel;
+import com.hyperion.metadata.repository.BCDocumentRepository;
+import com.hyperion.metadata.repository.CCDocumentRepository;
+import com.hyperion.metadata.repository.PCDocumentCustomRepository;
+import com.hyperion.metadata.repository.PCDocumentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+public class OnBaseAPIGateway {
+
+    @Autowired
+    PCDocumentRepository pCDocumentRepository;
+    @Autowired
+    PCDocumentCustomRepository PCDocumentCustomRepository;
+    @Autowired
+    BCDocumentRepository bCDocumentRepository;
+    @Autowired
+    CCDocumentRepository cCDocumentRepository;
+
+    @Autowired
+    PCDocumentCustomRepository documentRepositoryCustom;
+
+    // sample - http://localhost:8080/find/PC/999993f4-7fed-4d4b-bcd2-b7169fc1e05a
+    @RequestMapping(value = "/find/{source}/{envelopeID}", method = RequestMethod.GET)
+    public ResponseEntity<?> findDocumentByEnvelopeId(@PathVariable String source,@PathVariable String envelopeID){
+        ResponseEntity<?> responseEntity = null;
+        switch(source){
+            case "PC":
+                PCDocumentModel pCDocumentModel = pCDocumentRepository.findByGuidEnvelopeId(envelopeID);
+                if(pCDocumentModel == null){
+                    DocumentResponse docNotFoundError
+                            = new DocumentResponse(404, "Document not found with Envelope id" +envelopeID);
+                    responseEntity = new ResponseEntity<DocumentResponse>(docNotFoundError,HttpStatus.NOT_FOUND);
+                }else {
+                    responseEntity = new ResponseEntity<PCDocumentModel>(pCDocumentModel,HttpStatus.OK);
+                }
+                break;
+            case "BC":
+                //BCDocumentModel bcDocumentModel = bCDocumentRepository.find
+                break;
+            case "CC":
+                break;
+        }
+        System.out.println("findDocumentByEnvelopeId ResponseEntity >>"+responseEntity);
+        return responseEntity;
+    }
+
+    @RequestMapping(value = "/GetDocsBySource", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody List<PCDocumentModel> getSourceDocuments(@RequestParam String source){
+        System.out.println("Source value : "+source);
+        return pCDocumentRepository.findBySource(source);
+    }
+
+    @RequestMapping(value = "/GetDocsBySourceType", method = RequestMethod.GET)
+    public List<PCDocumentModel> findDocumentByDocType(@RequestParam String source, @RequestParam String type) {
+        return documentRepositoryCustom.findDocumentOnCriteria("documenttype",type);
+    }
+
+    @RequestMapping(value = "/{source}/add", method = RequestMethod.POST)
+    public ResponseEntity<DocumentResponse> addDocument(@RequestBody PCDocumentModel pCDocumentModel){
+        PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
+        DocumentResponse docResponse = null;
+        HttpStatus status=null;
+        if(doc!=null){
+            docResponse
+                    = new DocumentResponse(200, "Document inserted successfully : "
+                        +pCDocumentModel.getGuidEnvelopeId());
+            status = HttpStatus.OK;
+        }else{
+            docResponse
+                    = new DocumentResponse(406, "Document insertion failed : "
+                    +pCDocumentModel.getGuidEnvelopeId());
+            status = HttpStatus.NOT_ACCEPTABLE;
+        }
+        return new ResponseEntity<DocumentResponse>(docResponse,status);
+    }
+
+    @RequestMapping(value = "/{source}/delete/{guidEnvelopeId}", method = RequestMethod.DELETE)
+    public void deleteDocument(@PathVariable String guidEnvelopeId){
+        List<PCDocumentModel> docs =
+                    PCDocumentCustomRepository.findDocumentOnCriteria("guidEnvelopeId",guidEnvelopeId);
+        System.out.println("Docs going to be deleted !! "+docs);
+        docs.forEach(item -> {
+            pCDocumentRepository.delete(item);
+            System.out.println("Deleted Document >> : "+item.getGuidEnvelopeId());
+        });
+    }
+}

@@ -3,10 +3,11 @@ package com.hyperion.metadata.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Date;
 
-@Document(collection = "policy_billing")
-public class PC_BC_DocumentModel {
+@Document(collection = "billing")
+public class BCDocumentModel {
 
     @Id
     private int docID;
@@ -16,7 +17,6 @@ public class PC_BC_DocumentModel {
     private String documenttype;
     private String documenttypegroup;
     private String mimetype;
-    @Field(value = "documentname")
     private String name;
     private String policyNumber;
     private String policyPeriodId;
@@ -25,25 +25,6 @@ public class PC_BC_DocumentModel {
     private Date modifiedDate;
     private String source;
     private String guidEnvelopeId;
-    private int batchId;
-
-    private String dummy;
-
-    public String getDummy() {
-        return dummy;
-    }
-
-    public void setDummy(String dummy) {
-        this.dummy = dummy;
-    }
-
-    public int getBatchId() {
-        return batchId;
-    }
-
-    public void setBatchId(int batchId) {
-        this.batchId = batchId;
-    }
 
     public String getGuidEnvelopeId() {
         return guidEnvelopeId;
@@ -61,7 +42,7 @@ public class PC_BC_DocumentModel {
         this.source = source;
     }
 
-    public PC_BC_DocumentModel(){}
+    public BCDocumentModel(){}
 
     public int getDocID() {
         return docID;
