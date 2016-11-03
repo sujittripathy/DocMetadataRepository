@@ -29,20 +29,18 @@ public class BCOnBaseDocumentModelTest {
             doc.setAccountNumber("A"+i);
             doc.setAccountId("bc:"+i);
             doc.setPolicyNumber("NVPA00"+i);
-            doc.setPolicyPeriodId("pc:1"+i);
+            //doc.setPolicyPeriodId("pc:1"+i);
             if(i%2==0){
                 doc.setAuthor("SYSTEM");
-                doc.setDocumenttype("invoice");
-                doc.setDocumenttypegroup("invoice");
+                doc.setDocumentType("invoice");
             }else{
                 doc.setAuthor("ssmith");
-                doc.setDocumenttype("payment letter");
-                doc.setDocumenttypegroup("other");
+                doc.setDocumentType("paymentconfirmationletter_MIG");
             }
             doc.setMimetype("application/pdf");
             doc.setName("APPLICATION BC FORM - "+i);
-            doc.setCreatedDate(new Date());
-            doc.setModifiedDate(new Date());
+            doc.setCreatedDateTime(new Date());
+            doc.setModifiedDateTime(new Date());
             doc.setSecuritytype("UNRESTRICTED");
             doc.setSource("BC");
             doc.setGuidEnvelopeId(UUID.randomUUID().toString());

@@ -64,25 +64,6 @@ public class OnBaseAPIGateway {
         return documentRepositoryCustom.findDocumentOnCriteria("documenttype",type);
     }
 
-    @RequestMapping(value = "/{source}/add", method = RequestMethod.POST)
-    public ResponseEntity<DocumentResponse> addDocument(@RequestBody PCDocumentModel pCDocumentModel){
-        PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
-        DocumentResponse docResponse = null;
-        HttpStatus status=null;
-        if(doc!=null){
-            docResponse
-                    = new DocumentResponse(200, "Document inserted successfully : "
-                        +pCDocumentModel.getGuidEnvelopeId());
-            status = HttpStatus.OK;
-        }else{
-            docResponse
-                    = new DocumentResponse(406, "Document insertion failed : "
-                    +pCDocumentModel.getGuidEnvelopeId());
-            status = HttpStatus.NOT_ACCEPTABLE;
-        }
-        return new ResponseEntity<DocumentResponse>(docResponse,status);
-    }
-
     @RequestMapping(value = "/{source}/delete/{guidEnvelopeId}", method = RequestMethod.DELETE)
     public void deleteDocument(@PathVariable String guidEnvelopeId){
         List<PCDocumentModel> docs =

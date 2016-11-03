@@ -20,31 +20,42 @@ public class PCOnBaseDocumentModelTest {
 
     @Test
     public void addDocumentMetadata(){
-        int i = 1000000000;
+        int i = 1;
         Random random=new Random();
         do{
            PCDocumentModel doc = new PCDocumentModel();
             doc.setDocID(random.nextInt(Integer.MAX_VALUE)+1);
             doc.setAccountNumber("A"+i);
             doc.setAccountId("pc:"+i);
-            doc.setPolicyNumber("NVPA00"+i);
-            doc.setPolicyPeriodId("pc:1"+i);
+            doc.setActivity("pca:"+i);
             doc.setAuthor("SYSTEM");
-            doc.setDocumenttype("other");
-            doc.setDocumenttypegroup("other");
+            doc.setDocumentType("other");
             doc.setMimetype("application/pdf");
             doc.setName("APPLICATION FORM - "+i);
-            doc.setCreatedDate(new Date());
-            doc.setModifiedDate(new Date());
+            doc.setJob("pc:"+(i*2));
+            doc.setPolicy("pc:"+(i*3));
+            doc.setPolicyNumber("NVPA00"+i);
+            doc.setPolicyperiod("pc:1"+i);
             doc.setSecuritytype("UNRESTRICTED");
+            doc.setCreatedDateTime(new Date());
+            doc.setModifiedDateTime(new Date());
             doc.setSource("PC");
-            doc.setGuidEnvelopeId(UUID.randomUUID().toString());
-            doc.setBatchId(random.nextInt(9999));
+            UUID uuid=UUID.randomUUID();
+            doc.setGuidEnvelopeId(uuid.toString());
+            doc.setUniqueid(uuid.toString());
+            doc.setBatchNumber(i*5);
+            doc.setDescription("DESC - "+i);
+            doc.setObsolete(i%2==0?true:false);
+            doc.setCustomerID("CUST"+i);
+            doc.setEprDocumentType(i%2==0?"DEC":"ID");
+            doc.setPrintsuppression(i%2==0?true:false);
+            doc.setCustomerID("SPOOL"+i);
 
             documentRepo.save(doc);
             System.out.println("Document Added Successfully: "+i);
             i++;
-        }while(i<=1000001000);
+
+        }while(i<=2);
 
     }
 }

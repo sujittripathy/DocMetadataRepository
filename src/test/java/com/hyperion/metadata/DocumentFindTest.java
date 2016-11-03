@@ -17,7 +17,7 @@ public class DocumentFindTest {
     @Autowired
     PCDocumentRepository pCDocumentRepository;
 
-    @Test
+    //@Test
     public void findDocument(){
         PCDocumentModel doc =
                 pCDocumentRepository.findByGuidEnvelopeId("999993f4-7fed-4d4b-bcd2-b7169fc1e05a");

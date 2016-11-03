@@ -13,29 +13,69 @@ public class CCDocumentModel {
     @Id
     private int docID;
     private String claimNumber;
-    private String claimId;
+    private String claim;
     private String author;
-    private String documenttype;
-    private String documenttypegroup;
+    private String documentType;
+    private String documentSubType;
     private String mimetype;
     private String name;
     private Date createdDate;
     private Date modifiedDate;
     private String[] contacts;
-    private List<Incident> incidents;
+    private List<Incident> incidentList; // 1 : M (1 Incident : Many Exposures)
     private String matter;
     private String source;
 
     public CCDocumentModel(){}
 
     public static class Incident{
-        int incidentId;
-        String incidentName;
-        Map<Integer,String> exposureMap = new HashMap<>();
-        public Incident(int id,String name, Map exposureMap){
-            this.incidentId = id;
-            this.incidentName = name;
-            this.exposureMap = exposureMap;
+        int publicid;
+        String displayname;
+        List<Exposure> exposureList;
+
+        public int getPublicid() {
+            return publicid;
+        }
+
+        public void setPublicid(int publicid) {
+            this.publicid = publicid;
+        }
+
+        public String getDisplayname() {
+            return displayname;
+        }
+
+        public void setDisplayname(String displayname) {
+            this.displayname = displayname;
+        }
+
+        public List<Exposure> getExposureList() {
+            return exposureList;
+        }
+
+        public void setExposureList(List<Exposure> exposureList) {
+            this.exposureList = exposureList;
+        }
+    }
+
+    public static class Exposure{
+        int publicid;
+        String displayname;
+
+        public int getPublicid() {
+            return publicid;
+        }
+
+        public void setPublicid(int publicid) {
+            this.publicid = publicid;
+        }
+
+        public String getDisplayname() {
+            return displayname;
+        }
+
+        public void setDisplayname(String displayname) {
+            this.displayname = displayname;
         }
     }
     public String getMatter() {
@@ -46,12 +86,12 @@ public class CCDocumentModel {
         this.matter = matter;
     }
 
-    public List<Incident> getIncidents() {
-        return incidents;
+    public List<Incident> getIncidentList() {
+        return incidentList;
     }
 
-    public void setIncidents(List<Incident> incidents) {
-        this.incidents = incidents;
+    public void setIncidentList(List<Incident> incidentList) {
+        this.incidentList = incidentList;
     }
 
     private String guidEnvelopeId;
@@ -65,11 +105,11 @@ public class CCDocumentModel {
     }
 
     public String getClaimId() {
-        return claimId;
+        return claim;
     }
 
     public void setClaimId(String claimId) {
-        this.claimId = claimId;
+        this.claim = claimId;
     }
 
 
@@ -105,20 +145,28 @@ public class CCDocumentModel {
         this.author = author;
     }
 
-    public String getDocumenttype() {
-        return documenttype;
+    public String getClaim() {
+        return claim;
     }
 
-    public void setDocumenttype(String documenttype) {
-        this.documenttype = documenttype;
+    public void setClaim(String claim) {
+        this.claim = claim;
     }
 
-    public String getDocumenttypegroup() {
-        return documenttypegroup;
+    public String getDocumentType() {
+        return documentType;
     }
 
-    public void setDocumenttypegroup(String documenttypegroup) {
-        this.documenttypegroup = documenttypegroup;
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public String getDocumentSubType() {
+        return documentSubType;
+    }
+
+    public void setDocumentSubType(String documentSubType) {
+        this.documentSubType = documentSubType;
     }
 
     public String getMimetype() {

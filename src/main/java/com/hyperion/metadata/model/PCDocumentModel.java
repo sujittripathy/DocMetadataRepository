@@ -3,6 +3,7 @@ package com.hyperion.metadata.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
 import java.util.Date;
 
 @Document(collection = "policy")
@@ -12,27 +13,106 @@ public class PCDocumentModel {
     private int docID;
     private String accountNumber;
     private String accountId;
+    private String activity;
     private String author;
-    private String documenttype;
-    private String documenttypegroup;
+    private String documentType;
     private String mimetype;
     @Field(value = "documentname")
     private String name;
+    private String job;
+    private String policy;
     private String policyNumber;
-    private String policyPeriodId;
+    private String policyperiod;
     private String securitytype;
-    private Date createdDate;
-    private Date modifiedDate;
+    private Date createdDateTime;
+    private Date modifiedDateTime;
     private String source;
     private String guidEnvelopeId;
-    private int batchId;
+    private String uniqueid;
+    private int batchNumber;
+    private String description;
+    private boolean obsolete;
+    private String customerID;
+    private String eprDocumentType;
+    private boolean printsuppression;
+    private String spoolID;
 
-    public int getBatchId() {
-        return batchId;
+
+    public String getUniqueid() {
+        return uniqueid;
+    }
+    public void setUniqueid(String uniqueid) {
+        this.uniqueid = uniqueid;
+    }
+    public String getJob() {
+        return job;
+    }
+    public void setJob(String job) {
+        this.job = job;
+    }
+    public String getCustomerID() {
+        return customerID;
+    }
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+    public String getEprDocumentType() {
+        return eprDocumentType;
+    }
+    public void setEprDocumentType(String eprDocumentType) {
+        this.eprDocumentType = eprDocumentType;
+    }
+    public boolean isPrintsuppression() {
+        return printsuppression;
+    }
+    public void setPrintsuppression(boolean printsuppression) {
+        this.printsuppression = printsuppression;
+    }
+    public String getSpoolID() {
+        return spoolID;
+    }
+    public void setSpoolID(String spoolID) {
+        this.spoolID = spoolID;
     }
 
-    public void setBatchId(int batchId) {
-        this.batchId = batchId;
+    public String getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(String policy) {
+        this.policy = policy;
+    }
+
+    public String getDocumentType() {
+        return documentType;
+    }
+
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
+    }
+
+    public boolean isObsolete() {
+        return obsolete;
+    }
+
+    public void setObsolete(boolean obsolete) {
+        this.obsolete = obsolete;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getBatchNumber() {
+        return batchNumber;
+    }
+
+    public void setBatchNumber(int batchNumber) {
+        this.batchNumber = batchNumber;
     }
 
     public String getGuidEnvelopeId() {
@@ -51,7 +131,8 @@ public class PCDocumentModel {
         this.source = source;
     }
 
-    public PCDocumentModel(){}
+    public PCDocumentModel() {
+    }
 
     public int getDocID() {
         return docID;
@@ -85,22 +166,6 @@ public class PCDocumentModel {
         this.author = author;
     }
 
-    public String getDocumenttype() {
-        return documenttype;
-    }
-
-    public void setDocumenttype(String documenttype) {
-        this.documenttype = documenttype;
-    }
-
-    public String getDocumenttypegroup() {
-        return documenttypegroup;
-    }
-
-    public void setDocumenttypegroup(String documenttypegroup) {
-        this.documenttypegroup = documenttypegroup;
-    }
-
     public String getMimetype() {
         return mimetype;
     }
@@ -125,12 +190,12 @@ public class PCDocumentModel {
         this.policyNumber = policyNumber;
     }
 
-    public String getPolicyPeriodId() {
-        return policyPeriodId;
+    public String getPolicyperiod() {
+        return policyperiod;
     }
 
-    public void setPolicyPeriodId(String policyPeriodId) {
-        this.policyPeriodId = policyPeriodId;
+    public void setPolicyperiod(String policyperiod) {
+        this.policyperiod = policyperiod;
     }
 
     public String getSecuritytype() {
@@ -141,20 +206,29 @@ public class PCDocumentModel {
         this.securitytype = securitytype;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedDateTime(Date createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getModifiedDateTime() {
+        return modifiedDateTime;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModifiedDateTime(Date modifiedDateTime) {
+        this.modifiedDateTime = modifiedDateTime;
     }
+
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
 
 }

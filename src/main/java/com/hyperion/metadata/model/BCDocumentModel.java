@@ -13,36 +13,29 @@ public class BCDocumentModel {
     private int docID;
     private String accountNumber;
     private String accountId;
+    private String activity;
     private String author;
-    private String documenttype;
-    private String documenttypegroup;
+    private String documentType;
     private String mimetype;
     private String name;
+    private String job;
+    private String policy;
     private String policyNumber;
-    private String policyPeriodId;
+    private String policyperiod;
     private String securitytype;
-    private Date createdDate;
-    private Date modifiedDate;
+    private Date createdDateTime;
+    private Date modifiedDateTime;
     private String source;
     private String guidEnvelopeId;
-
-    public String getGuidEnvelopeId() {
-        return guidEnvelopeId;
-    }
-
-    public void setGuidEnvelopeId(String guidEnvelopeId) {
-        this.guidEnvelopeId = guidEnvelopeId;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public BCDocumentModel(){}
+    private String uniqueid;
+    private int batchNumber;
+    private String description;
+    private boolean obsolete;
+    private String customerID;
+    private String eprDocumentType;
+    private boolean printsuppression;
+    private String spoolID;
+    private int termNumber;
 
     public int getDocID() {
         return docID;
@@ -68,6 +61,14 @@ public class BCDocumentModel {
         this.accountId = accountId;
     }
 
+    public String getActivity() {
+        return activity;
+    }
+
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
     public String getAuthor() {
         return author;
     }
@@ -76,20 +77,12 @@ public class BCDocumentModel {
         this.author = author;
     }
 
-    public String getDocumenttype() {
-        return documenttype;
+    public String getDocumentType() {
+        return documentType;
     }
 
-    public void setDocumenttype(String documenttype) {
-        this.documenttype = documenttype;
-    }
-
-    public String getDocumenttypegroup() {
-        return documenttypegroup;
-    }
-
-    public void setDocumenttypegroup(String documenttypegroup) {
-        this.documenttypegroup = documenttypegroup;
+    public void setDocumentType(String documentType) {
+        this.documentType = documentType;
     }
 
     public String getMimetype() {
@@ -108,6 +101,22 @@ public class BCDocumentModel {
         this.name = name;
     }
 
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(String policy) {
+        this.policy = policy;
+    }
+
     public String getPolicyNumber() {
         return policyNumber;
     }
@@ -116,12 +125,12 @@ public class BCDocumentModel {
         this.policyNumber = policyNumber;
     }
 
-    public String getPolicyPeriodId() {
-        return policyPeriodId;
+    public String getPolicyperiod() {
+        return policyperiod;
     }
 
-    public void setPolicyPeriodId(String policyPeriodId) {
-        this.policyPeriodId = policyPeriodId;
+    public void setPolicyperiod(String policyperiod) {
+        this.policyperiod = policyperiod;
     }
 
     public String getSecuritytype() {
@@ -132,20 +141,107 @@ public class BCDocumentModel {
         this.securitytype = securitytype;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public Date getCreatedDateTime() {
+        return createdDateTime;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedDateTime(Date createdDateTime) {
+        this.createdDateTime = createdDateTime;
     }
 
-    public Date getModifiedDate() {
-        return modifiedDate;
+    public Date getModifiedDateTime() {
+        return modifiedDateTime;
     }
 
-    public void setModifiedDate(Date modifiedDate) {
-        this.modifiedDate = modifiedDate;
+    public void setModifiedDateTime(Date modifiedDateTime) {
+        this.modifiedDateTime = modifiedDateTime;
     }
 
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getGuidEnvelopeId() {
+        return guidEnvelopeId;
+    }
+
+    public void setGuidEnvelopeId(String guidEnvelopeId) {
+        this.guidEnvelopeId = guidEnvelopeId;
+    }
+
+    public String getUniqueid() {
+        return uniqueid;
+    }
+
+    public void setUniqueid(String uniqueid) {
+        this.uniqueid = uniqueid;
+    }
+
+    public int getBatchNumber() {
+        return batchNumber;
+    }
+
+    public void setBatchNumber(int batchNumber) {
+        this.batchNumber = batchNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean isObsolete() {
+        return obsolete;
+    }
+
+    public void setObsolete(boolean obsolete) {
+        this.obsolete = obsolete;
+    }
+
+    public String getCustomerID() {
+        return customerID;
+    }
+
+    public void setCustomerID(String customerID) {
+        this.customerID = customerID;
+    }
+
+    public String getEprDocumentType() {
+        return eprDocumentType;
+    }
+
+    public void setEprDocumentType(String eprDocumentType) {
+        this.eprDocumentType = eprDocumentType;
+    }
+
+    public boolean isPrintsuppression() {
+        return printsuppression;
+    }
+
+    public void setPrintsuppression(boolean printsuppression) {
+        this.printsuppression = printsuppression;
+    }
+
+    public String getSpoolID() {
+        return spoolID;
+    }
+
+    public void setSpoolID(String spoolID) {
+        this.spoolID = spoolID;
+    }
+
+    public int getTermNumber() {
+        return termNumber;
+    }
+
+    public void setTermNumber(int termNumber) {
+        this.termNumber = termNumber;
+    }
 }

@@ -29,11 +29,11 @@ public class CCOnBaseDocumentModelTest {
             doc.setClaimNumber("NVPA-"+i);
             doc.setAuthor("SYSTEM");
             if(i%2==0) {
-                doc.setDocumenttype("correspondence");
+                //doc.setDocumenttype("correspondence");
             }else {
-                doc.setDocumenttype("iso");
+               // doc.setDocumenttype("iso");
             }
-            doc.setDocumenttypegroup("other");
+            //doc.setDocumenttypegroup("other");
             doc.setMimetype("application/pdf");
             doc.setName("CLAIMS FORM - "+i);
             doc.setCreatedDate(new Date());
@@ -43,10 +43,10 @@ public class CCOnBaseDocumentModelTest {
             doc.setMatter("Matter - "+i);
             HashMap<Integer,String> exposureMap= new HashMap<>();
             exposureMap.put(i,"Exposure ID"+i);
-            CCDocumentModel.Incident c= new CCDocumentModel.Incident(i,"Incident ID"+i,exposureMap);
-            ArrayList<CCDocumentModel.Incident> incidentArrayList = new ArrayList<>();
-            incidentArrayList.add(c);
-            doc.setIncidents(incidentArrayList);
+           // CCDocumentModel.Incident c= new CCDocumentModel.Incident(i,"Incident ID"+i,exposureMap);
+           // ArrayList<CCDocumentModel.Incident> incidentArrayList = new ArrayList<>();
+            //incidentArrayList.add(c);
+            //doc.setIncidents(incidentArrayList);
             cc_documentRepo.save(doc);
             System.out.println("CC Document Added Successfully: "+i);
             i++;
