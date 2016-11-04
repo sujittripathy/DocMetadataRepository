@@ -10,9 +10,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.util.List;
 
 @Component
 public class PCAPIGateway{
@@ -21,32 +24,22 @@ public class PCAPIGateway{
 
     private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
 
-    /*@RequestMapping(value = "/pc/add", method = RequestMethod.POST)
-    public ResponseEntity<DocumentResponse> addDocument(@RequestBody PCDocumentModel pCDocumentModel){
-        logger.debug("Received JSON request : "+pCDocumentModel);
-        PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
-        DocumentResponse docResponse = null;
-        HttpStatus status=null;
-        if(doc!=null){
-            docResponse
-                    = new DocumentResponse(200, "Document inserted successfully : "
-                    +pCDocumentModel.getGuidEnvelopeId());
-            status = HttpStatus.OK;
-        }else{
-            docResponse
-                    = new DocumentResponse(406, "!! Document insertion failed !! "
-                    +pCDocumentModel.getGuidEnvelopeId());
-            status = HttpStatus.NOT_ACCEPTABLE;
-        }
-        logger.debug("Response returned : "+docResponse.getCode() +","+docResponse.getMessage());
-        return new ResponseEntity<DocumentResponse>(docResponse,status);
-    }*/
-
 
     public PCDocumentModel addPCDocument(PCDocumentModel pCDocumentModel){
         logger.debug("Received add Document JSON request : "+pCDocumentModel);
         PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
         return doc;
 
+    }
+
+    public boolean deleteDocument(String guidEnvelopeId){
+        PCDocumentModel doc =
+                pCDocumentRepository.findByGuidEnvelopeId(guidEnvelopeId);
+        if(doc!=null){
+            pCDocumentRepository.delete(doc);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

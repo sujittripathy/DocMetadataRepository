@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class BaseAPIGatewayImpl implements BaseAPIGateway {
 
@@ -40,4 +42,25 @@ public class BaseAPIGatewayImpl implements BaseAPIGateway {
         }
         return new ResponseEntity<DocumentResponse>(docResponse,status);
     }
+
+    @RequestMapping(value = "/{source}/search", method = RequestMethod.GET)
+    public List<PCDocumentModel> findDocuments(@PathVariable String source,
+                                               @RequestParam String pn,
+                                               @RequestParam String env){
+
+        return null;
+    }
+
+    @RequestMapping(value = "/{source}/delete/{guidEnvelopeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<DocumentResponse> deleteDocument(@PathVariable String guidEnvelopeId){
+        boolean status = pcapiGateway.deleteDocument(guidEnvelopeId);
+        if(status){
+            return new ResponseEntity<DocumentResponse>(new DocumentResponse(0,"Deleted Successfully"),
+                    HttpStatus.OK);
+        }else{
+            return new ResponseEntity<DocumentResponse>(new DocumentResponse(1,"Not Found/Deleted"),
+                    HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

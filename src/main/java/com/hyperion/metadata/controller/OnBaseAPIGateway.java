@@ -69,14 +69,4 @@ public class OnBaseAPIGateway {
         return documentRepositoryCustom.findDocumentOnCriteria("documenttype",type);
     }
 
-    @RequestMapping(value = "/{source}/delete/{guidEnvelopeId}", method = RequestMethod.DELETE)
-    public void deleteDocument(@PathVariable String guidEnvelopeId){
-        List<PCDocumentModel> docs =
-                    PCDocumentCustomRepository.findDocumentOnCriteria("guidEnvelopeId",guidEnvelopeId);
-        System.out.println("Docs going to be deleted !! "+docs);
-        docs.forEach(item -> {
-            pCDocumentRepository.delete(item);
-            System.out.println("Deleted Document >> : "+item.getGuidEnvelopeId());
-        });
-    }
 }
