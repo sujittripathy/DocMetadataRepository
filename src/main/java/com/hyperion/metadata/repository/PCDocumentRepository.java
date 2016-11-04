@@ -10,8 +10,9 @@ import java.util.List;
 //@RepositoryRestResource(collectionResourceRel = "policy", path="onbase")
 public interface PCDocumentRepository extends MongoRepository<PCDocumentModel,Integer> {
     List<PCDocumentModel> findByAccountId(@Param("accountId") String accountId);
-
+    List<PCDocumentModel> findByPolicyNumber(@Param("policyNumber") String policyNumber);
     List<PCDocumentModel> findBySource(String s);
-
     PCDocumentModel findByGuidEnvelopeId(String s);
+    @Query("{'policyNumber':?0}")
+    List<PCDocumentModel> findByUserPolicy(String policy);
 }

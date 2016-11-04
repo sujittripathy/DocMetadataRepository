@@ -20,7 +20,7 @@ public class PCOnBaseDocumentModelTest {
 
     @Test
     public void addDocumentMetadata(){
-        int i = 1000100;
+        int i = 1000102;
         Random random=new Random();
         do{
            PCDocumentModel doc = new PCDocumentModel();
@@ -49,13 +49,12 @@ public class PCOnBaseDocumentModelTest {
             doc.setCustomerID("CUST"+i);
             doc.setEprDocumentType(i%2==0?"DEC":"ID");
             doc.setPrintsuppression(i%2==0?true:false);
-            doc.setCustomerID("SPOOL"+i);
+            doc.setSpoolID("SPOOL"+i);
 
             documentRepo.insert(doc);
             System.out.println("Document Added Successfully: "+i);
             i++;
 
-        }while(i<=1010000);
-
+        }while(i<=1001102);
     }
 }
