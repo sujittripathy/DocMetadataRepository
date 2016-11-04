@@ -1,7 +1,6 @@
 package com.hyperion.metadata.gateway;
 
 import com.hyperion.metadata.DocumentResponse;
-import com.hyperion.metadata.model.BaseDocumentModel;
 import com.hyperion.metadata.model.PCDocumentModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
