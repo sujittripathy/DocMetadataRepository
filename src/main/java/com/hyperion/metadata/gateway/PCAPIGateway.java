@@ -8,19 +8,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@Controller
-public class PCAPIGateway extends BaseAPIGatewayImpl {
+@Component
+public class PCAPIGateway{
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
 
-    @RequestMapping(value = "/pc/add", method = RequestMethod.POST)
+    /*@RequestMapping(value = "/pc/add", method = RequestMethod.POST)
     public ResponseEntity<DocumentResponse> addDocument(@RequestBody PCDocumentModel pCDocumentModel){
         logger.debug("Received JSON request : "+pCDocumentModel);
         PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
@@ -39,5 +40,13 @@ public class PCAPIGateway extends BaseAPIGatewayImpl {
         }
         logger.debug("Response returned : "+docResponse.getCode() +","+docResponse.getMessage());
         return new ResponseEntity<DocumentResponse>(docResponse,status);
+    }*/
+
+
+    public PCDocumentModel addPCDocument(PCDocumentModel pCDocumentModel){
+        logger.debug("Received add Document JSON request : "+pCDocumentModel);
+        PCDocumentModel doc = pCDocumentRepository.insert(pCDocumentModel);
+        return doc;
+
     }
 }

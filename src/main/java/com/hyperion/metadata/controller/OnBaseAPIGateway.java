@@ -6,6 +6,8 @@ import com.hyperion.metadata.repository.BCDocumentRepository;
 import com.hyperion.metadata.repository.CCDocumentRepository;
 import com.hyperion.metadata.repository.PCDocumentCustomRepository;
 import com.hyperion.metadata.repository.PCDocumentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @RestController
 public class OnBaseAPIGateway {
+
+    private static Logger logger = LoggerFactory.getLogger(OnBaseAPIGateway.class);
 
     @Autowired
     PCDocumentRepository pCDocumentRepository;
@@ -31,6 +35,7 @@ public class OnBaseAPIGateway {
     // sample - http://localhost:8080/find/PC/999993f4-7fed-4d4b-bcd2-b7169fc1e05a
     @RequestMapping(value = "/find/{source}/{envelopeID}", method = RequestMethod.GET)
     public ResponseEntity<?> findDocumentByEnvelopeId(@PathVariable String source,@PathVariable String envelopeID){
+        logger.info("Inside findDocumentByEnvelopeId method,"+source);
         ResponseEntity<?> responseEntity = null;
         switch(source){
             case "PC":
@@ -49,7 +54,7 @@ public class OnBaseAPIGateway {
             case "CC":
                 break;
         }
-        System.out.println("findDocumentByEnvelopeId ResponseEntity >>"+responseEntity);
+        logger.debug("findDocumentByEnvelopeId ResponseEntity >>"+responseEntity);
         return responseEntity;
     }
 

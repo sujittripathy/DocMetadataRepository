@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.util.Date;
 
 @Document(collection = "policy")
-public class PCDocumentModel {
+public class PCDocumentModel implements BaseDocumentModel{
 
     @Id
     private int docID;

@@ -55,7 +55,7 @@ public class PCOnBaseDocumentModelTest {
             System.out.println("Document Added Successfully: "+i);
             i++;
 
-        }while(i<=2);
+        }while(i<=3);
 
     }
 }
