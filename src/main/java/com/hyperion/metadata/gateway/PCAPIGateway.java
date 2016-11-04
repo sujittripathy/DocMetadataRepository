@@ -19,7 +19,8 @@ public class PCAPIGateway{
 
     private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
 
-    @RequestMapping(value = "/pc/add/document", method = RequestMethod.POST)
+    @RequestMapping(value = "/pc/add/document",
+                    method = RequestMethod.POST)
     public ResponseEntity<?> addNewDocument(@RequestBody PCDocumentModel document) {
         DocumentResponse docResponse = null;
         HttpStatus status=HttpStatus.OK;
@@ -52,14 +53,18 @@ public class PCAPIGateway{
         }
     }
 
-    @RequestMapping(value = "/pc/search/document/{policy}", method = RequestMethod.GET)
+    @RequestMapping(value = "/pc/search/document/{policy}",
+                    method = RequestMethod.GET,
+                    produces = {"application/json","application/xml"}
+                    )
     public ResponseEntity<List<PCDocumentModel>> findDocuments(@PathVariable String policy){
         //Custom Implementation with Query
         List<PCDocumentModel> documents = pCDocumentRepository.findByUserPolicy(policy);
         return new ResponseEntity<List<PCDocumentModel>>(documents,HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/pc/search/document/all","/pc/search/document/findall"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/pc/search/document/all","/pc/search/document/findall"},
+                    method = RequestMethod.GET)
     public ResponseEntity<List<PCDocumentModel>> findAllDocuments(){
         List<PCDocumentModel> documents = pCDocumentRepository.findAll();
         return new ResponseEntity<List<PCDocumentModel>>(documents,HttpStatus.OK);
