@@ -4,10 +4,15 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Document(collection = "policy")
+@XmlRootElement(name = "document")
 public class PCDocumentModel{
+
+    public PCDocumentModel() {
+    }
 
     @Id
     private int docID;
@@ -129,9 +134,6 @@ public class PCDocumentModel{
 
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public PCDocumentModel() {
     }
 
     public int getDocID() {

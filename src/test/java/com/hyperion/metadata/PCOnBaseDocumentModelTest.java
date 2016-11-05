@@ -20,7 +20,7 @@ public class PCOnBaseDocumentModelTest {
 
     @Test
     public void addDocumentMetadata(){
-        int i = 1000102;
+        int i = 1000000;
         Random random=new Random();
         do{
            PCDocumentModel doc = new PCDocumentModel();
@@ -55,6 +55,6 @@ public class PCOnBaseDocumentModelTest {
             System.out.println("Document Added Successfully: "+i);
             i++;
 
-        }while(i<=1001102);
+        }while(i<=1000002);
     }
 }

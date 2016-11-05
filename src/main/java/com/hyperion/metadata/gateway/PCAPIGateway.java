@@ -1,16 +1,26 @@
 package com.hyperion.metadata.gateway;
 
 import com.hyperion.metadata.DocumentResponse;
+import com.hyperion.metadata.exception.NoDocsFoundException;
 import com.hyperion.metadata.model.PCDocumentModel;
 import com.hyperion.metadata.repository.PCDocumentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class PCAPIGateway{
@@ -30,7 +40,7 @@ public class PCAPIGateway{
             docResponse
                     = new DocumentResponse(200, "Document inserted successfully : "
                     +document.getGuidEnvelopeId());
-            status = HttpStatus.OK;
+            status = HttpStatus.CREATED;
         }else{
             docResponse
                     = new DocumentResponse(406, "!! Document insertion failed !! "
@@ -55,19 +65,31 @@ public class PCAPIGateway{
 
     @RequestMapping(value = "/pc/search/document/{policy}",
                     method = RequestMethod.GET,
-                    produces = {"application/json","application/xml"}
+                    produces = {MediaType.APPLICATION_JSON_VALUE}
                     )
-    public ResponseEntity<List<PCDocumentModel>> findDocuments(@PathVariable String policy){
+    public @ResponseBody List<PCDocumentModel> findDocuments(@PathVariable String policy){
         //Custom Implementation with Query
         List<PCDocumentModel> documents = pCDocumentRepository.findByUserPolicy(policy);
-        return new ResponseEntity<List<PCDocumentModel>>(documents,HttpStatus.OK);
+        if(documents.size()==0) {
+                throw new NoDocsFoundException(policy);
+        }
+        return documents;
     }
 
     @RequestMapping(value = {"/pc/search/document/all","/pc/search/document/findall"},
                     method = RequestMethod.GET)
     public ResponseEntity<List<PCDocumentModel>> findAllDocuments(){
         List<PCDocumentModel> documents = pCDocumentRepository.findAll();
-        return new ResponseEntity<List<PCDocumentModel>>(documents,HttpStatus.OK);
+        //////// JUST For Header Test //////
+        HttpHeaders header=new HttpHeaders();
+        URI loc= URI.create("https://www.google.com");
+        header.setLocation(loc);
+        List<String> l = new ArrayList<String>();
+        l.add("hello");
+        l.add("world!");
+        header.put("test",l);
+        //////// JUST For Test //////
+        return new ResponseEntity<List<PCDocumentModel>>(documents,header,HttpStatus.OK);
     }
 
     @RequestMapping(value = "/pc/update/document", method = RequestMethod.PUT)
@@ -75,5 +97,11 @@ public class PCAPIGateway{
         System.out.println("PCDocumentModel Details -- "+document);
         PCDocumentModel model = pCDocumentRepository.save(document);
         return new ResponseEntity<DocumentResponse>(new DocumentResponse(100,"Updated Successfully"),HttpStatus.OK);
+    }
+
+    @ExceptionHandler(value = {NoDocsFoundException.class})
+    public ResponseEntity<DocumentResponse> documentNotFound(NoDocsFoundException ndf){
+        return new ResponseEntity<DocumentResponse>
+                    (new DocumentResponse(999,"No Documents Found"+ndf.getIdentifier()),HttpStatus.NOT_FOUND);
     }
 }
