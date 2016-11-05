@@ -33,7 +33,7 @@ public class OnBaseAPIGateway {
     PCDocumentCustomRepository documentRepositoryCustom;
 
     // sample - http://localhost:8080/find/PC/999993f4-7fed-4d4b-bcd2-b7169fc1e05a
-    @RequestMapping(value = "/find/{source}/{envelopeID}", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/find/{source}/{envelopeID}", method = RequestMethod.GET)
     public ResponseEntity<?> findDocumentByEnvelopeId(@PathVariable String source,@PathVariable String envelopeID){
         logger.info("Inside findDocumentByEnvelopeId method,"+source);
         ResponseEntity<?> responseEntity = null;
@@ -56,7 +56,7 @@ public class OnBaseAPIGateway {
         }
         logger.debug("findDocumentByEnvelopeId ResponseEntity >>"+responseEntity);
         return responseEntity;
-    }
+    }*/
 
     @RequestMapping(value = "/GetDocsBySource", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody List<PCDocumentModel> getSourceDocuments(@RequestParam String source){

@@ -26,7 +26,13 @@ import java.util.Map;
 public class PCAPIGateway{
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
+    @Autowired
+    private DocumentResponse documentResponse;
 
+    @Bean
+    public DocumentResponse documentResponse(){
+        return new DocumentResponse();
+    }
     private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
 
     @RequestMapping(value = "/pc/add/document",
@@ -38,12 +44,16 @@ public class PCAPIGateway{
         PCDocumentModel doc = pCDocumentRepository.insert(document);
         if(document!=null){
             docResponse
-                    = new DocumentResponse(200, "Document inserted successfully : "
+                    = new DocumentResponse();
+            docResponse.setCode(200);
+            docResponse.setMessage("Document inserted successfully : "
                     +document.getGuidEnvelopeId());
             status = HttpStatus.CREATED;
         }else{
             docResponse
-                    = new DocumentResponse(406, "!! Document insertion failed !! "
+                    = new DocumentResponse();
+            docResponse.setCode(406);
+            docResponse.setMessage("!! Document insertion failed !! "
                     +document.getGuidEnvelopeId());
             status = HttpStatus.NOT_ACCEPTABLE;
         }
@@ -55,10 +65,14 @@ public class PCAPIGateway{
         PCDocumentModel doc = pCDocumentRepository.findByGuidEnvelopeId(guid);
         if(doc!=null){
             pCDocumentRepository.delete(doc);
-            return new ResponseEntity<DocumentResponse>(new DocumentResponse(0,"Deleted Successfully"),
+            documentResponse.setCode(0);
+            documentResponse.setMessage("Deleted Successfully");
+            return new ResponseEntity<DocumentResponse>(documentResponse,
                     HttpStatus.OK);
         }else{
-            return new ResponseEntity<DocumentResponse>(new DocumentResponse(1,"Not Found/Deleted"),
+            documentResponse.setCode(1);
+            documentResponse.setMessage("Not Found/Deleted");
+            return new ResponseEntity<DocumentResponse>(documentResponse,
                     HttpStatus.NOT_FOUND);
         }
     }
@@ -96,12 +110,16 @@ public class PCAPIGateway{
     public ResponseEntity<DocumentResponse> updateDocMetadata(@RequestBody PCDocumentModel document){
         System.out.println("PCDocumentModel Details -- "+document);
         PCDocumentModel model = pCDocumentRepository.save(document);
-        return new ResponseEntity<DocumentResponse>(new DocumentResponse(100,"Updated Successfully"),HttpStatus.OK);
+        documentResponse.setCode(100);
+        documentResponse.setMessage("Updated Successfully");
+        return new ResponseEntity<DocumentResponse>(documentResponse,HttpStatus.OK);
     }
 
     @ExceptionHandler(value = {NoDocsFoundException.class})
     public ResponseEntity<DocumentResponse> documentNotFound(NoDocsFoundException ndf){
+        documentResponse.setCode(999);
+        documentResponse.setMessage("No Documents Found"+ndf.getIdentifier());
         return new ResponseEntity<DocumentResponse>
-                    (new DocumentResponse(999,"No Documents Found"+ndf.getIdentifier()),HttpStatus.NOT_FOUND);
+                    (documentResponse,HttpStatus.NOT_FOUND);
     }
 }
