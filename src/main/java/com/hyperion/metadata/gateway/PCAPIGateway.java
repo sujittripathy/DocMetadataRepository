@@ -1,9 +1,11 @@
 package com.hyperion.metadata.gateway;
 
 import com.hyperion.metadata.DocumentResponse;
+import com.hyperion.metadata.dto.PolicyDocumentsDTO;
 import com.hyperion.metadata.exception.NoDocsFoundException;
 import com.hyperion.metadata.model.PCDocumentModel;
 import com.hyperion.metadata.repository.PCDocumentRepository;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,16 @@ public class PCAPIGateway{
     private PCDocumentRepository pCDocumentRepository;
     @Autowired
     private DocumentResponse documentResponse;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Bean
     public DocumentResponse documentResponse(){
         return new DocumentResponse();
+    }
+    @Bean
+    public ModelMapper modelMapper(){
+        return new ModelMapper();
     }
     private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
 
@@ -81,13 +89,18 @@ public class PCAPIGateway{
                     method = RequestMethod.GET,
                     produces = {MediaType.APPLICATION_JSON_VALUE}
                     )
-    public @ResponseBody List<PCDocumentModel> findDocuments(@PathVariable String policy){
+    public @ResponseBody List<PolicyDocumentsDTO> findDocuments(@PathVariable String policy){
         //Custom Implementation with Query
         List<PCDocumentModel> documents = pCDocumentRepository.findByUserPolicy(policy);
         if(documents.size()==0) {
                 throw new NoDocsFoundException(policy);
         }
-        return documents;
+        List<PolicyDocumentsDTO> policyDocumentsDTOs = new ArrayList<>();
+        documents.forEach(document -> {
+            PolicyDocumentsDTO dest = modelMapper.map(document,PolicyDocumentsDTO.class);
+            policyDocumentsDTOs.add(dest);
+        });
+        return policyDocumentsDTOs;
     }
 
     @RequestMapping(value = {"/pc/search/document/all","/pc/search/document/findall"},

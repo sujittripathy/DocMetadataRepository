@@ -59,6 +59,11 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 			<version>1.4.1.RELEASE</version>
 		</dependency>
+		<dependency>
+			<groupId>com.github.jmnarloch</groupId>
+			<artifactId>modelmapper-spring-boot-starter</artifactId>
+			<version>1.0.1</version>
+		</dependency>
 
 	</dependencies>
 
