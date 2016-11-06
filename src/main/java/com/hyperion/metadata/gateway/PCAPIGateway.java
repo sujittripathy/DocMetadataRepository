@@ -1,6 +1,6 @@
 package com.hyperion.metadata.gateway;
 
-import com.hyperion.metadata.DocumentResponse;
+import com.hyperion.metadata.response.DocumentResponse;
 import com.hyperion.metadata.dto.PolicyDocumentsDTO;
 import com.hyperion.metadata.exception.NoDocsFoundException;
 import com.hyperion.metadata.model.PCDocumentModel;
@@ -15,28 +15,30 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class PCAPIGateway{
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
     @Autowired
-    private DocumentResponse documentResponse;
+    private DocumentResponse documentResponseObj;
     @Autowired
     private ModelMapper modelMapper;
 
-    @Bean
-    public DocumentResponse documentResponse(){
+    /*@Bean
+    public DocumentResponse documentResponseObj(){
         return new DocumentResponse();
     }
+
+    @Bean
+    public DocumentResponse documentResponseObj1(){
+        return new DocumentResponse();
+    }*/
     @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
@@ -73,14 +75,14 @@ public class PCAPIGateway{
         PCDocumentModel doc = pCDocumentRepository.findByGuidEnvelopeId(guid);
         if(doc!=null){
             pCDocumentRepository.delete(doc);
-            documentResponse.setCode(0);
-            documentResponse.setMessage("Deleted Successfully");
-            return new ResponseEntity<DocumentResponse>(documentResponse,
+            documentResponseObj.setCode(0);
+            documentResponseObj.setMessage("Deleted Successfully");
+            return new ResponseEntity<DocumentResponse>(documentResponseObj,
                     HttpStatus.OK);
         }else{
-            documentResponse.setCode(1);
-            documentResponse.setMessage("Not Found/Deleted");
-            return new ResponseEntity<DocumentResponse>(documentResponse,
+            documentResponseObj.setCode(1);
+            documentResponseObj.setMessage("Not Found/Deleted");
+            return new ResponseEntity<DocumentResponse>(documentResponseObj,
                     HttpStatus.NOT_FOUND);
         }
     }
@@ -123,16 +125,16 @@ public class PCAPIGateway{
     public ResponseEntity<DocumentResponse> updateDocMetadata(@RequestBody PCDocumentModel document){
         System.out.println("PCDocumentModel Details -- "+document);
         PCDocumentModel model = pCDocumentRepository.save(document);
-        documentResponse.setCode(100);
-        documentResponse.setMessage("Updated Successfully");
-        return new ResponseEntity<DocumentResponse>(documentResponse,HttpStatus.OK);
+        documentResponseObj.setCode(100);
+        documentResponseObj.setMessage("Updated Successfully");
+        return new ResponseEntity<DocumentResponse>(documentResponseObj,HttpStatus.OK);
     }
 
     @ExceptionHandler(value = {NoDocsFoundException.class})
     public ResponseEntity<DocumentResponse> documentNotFound(NoDocsFoundException ndf){
-        documentResponse.setCode(999);
-        documentResponse.setMessage("No Documents Found"+ndf.getIdentifier());
+        documentResponseObj.setCode(999);
+        documentResponseObj.setMessage("No Documents Found"+ndf.getIdentifier());
         return new ResponseEntity<DocumentResponse>
-                    (documentResponse,HttpStatus.NOT_FOUND);
+                    (documentResponseObj,HttpStatus.NOT_FOUND);
     }
 }

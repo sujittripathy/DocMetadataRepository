@@ -1,5 +1,8 @@
-package com.hyperion.metadata;
+package com.hyperion.metadata.response;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class DocumentResponse {
     private int code;
     private String message;
