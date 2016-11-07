@@ -5,6 +5,6 @@ Search All Documents                            http://localhost:9090/pc/search/
 Delete (DELETE)                                 http://localhost:9090/pc/delete/document/db6dfb6a-2a4c-43b6-b7ec-b96feda4237a
 Add Document (POST)                             http://localhost:9090/pc/add/document
 
-Swagger
+Swagger - url
 ----
 https://github.com/wmeints/spring-apidocs-demo
