@@ -1,4 +1,4 @@
-package com.hyperion.metadata.gateway;
+package com.hyperion.metadata.restcontroller;
 
 import com.hyperion.metadata.response.DocumentResponse;
 import com.hyperion.metadata.dto.PolicyDocumentsDTO;
@@ -14,15 +14,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-public class PCAPIGateway{
+@RestController
+public class PCRestController {
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
     @Autowired
@@ -43,7 +41,7 @@ public class PCAPIGateway{
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }
-    private static final Logger logger = LoggerFactory.getLogger(PCAPIGateway.class);
+    private static final Logger logger = LoggerFactory.getLogger(PCRestController.class);
 
     @RequestMapping(value = "/pc/add/document",
                     method = RequestMethod.POST)
