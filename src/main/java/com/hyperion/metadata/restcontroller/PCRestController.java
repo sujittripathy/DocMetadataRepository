@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/pc")
 public class PCRestController {
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
@@ -44,7 +45,7 @@ public class PCRestController {
     }
     private static final Logger logger = LoggerFactory.getLogger(PCRestController.class);
 
-    @RequestMapping(value = "/pc/add/document",
+    @RequestMapping(value = "/add/document",
                     method = RequestMethod.POST)
     public ResponseEntity<?> addNewDocument(@RequestBody PCDocumentModel document) {
         DocumentResponse docResponse = null;
@@ -69,7 +70,7 @@ public class PCRestController {
         return new ResponseEntity<DocumentResponse>(docResponse,status);
     }
 
-    @RequestMapping(value = "/pc/delete/document/{guid}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/document/{guid}", method = RequestMethod.DELETE)
     public ResponseEntity<DocumentResponse> deleteDocument(@PathVariable String guid){
         PCDocumentModel doc = pCDocumentRepository.findByGuidEnvelopeId(guid);
         if(doc!=null){
@@ -86,7 +87,7 @@ public class PCRestController {
         }
     }
 
-    @RequestMapping(value = "/pc/search/document/{policy}",
+    @RequestMapping(value = "/search/document/{policy}",
                     method = RequestMethod.GET,
                     produces = {MediaType.APPLICATION_JSON_VALUE}
                     )
@@ -108,7 +109,7 @@ public class PCRestController {
         return policyDocumentsDTOs;
     }
 
-    @RequestMapping(value = {"/pc/search/document/all","/pc/search/document/findall"},
+    @RequestMapping(value = {"/search/document/all","/pc/search/document/findall"},
                     method = RequestMethod.GET)
     public ResponseEntity<List<PCDocumentModel>> findAllDocuments(){
         List<PCDocumentModel> documents = pCDocumentRepository.findAll();
@@ -124,7 +125,7 @@ public class PCRestController {
         return new ResponseEntity<List<PCDocumentModel>>(documents,header,HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/pc/update/document", method = RequestMethod.PUT)
+    @RequestMapping(value = "/update/document", method = RequestMethod.PUT)
     public ResponseEntity<DocumentResponse> updateDocMetadata(@RequestBody PCDocumentModel document){
         System.out.println("PCDocumentModel Details -- "+document);
         PCDocumentModel model = pCDocumentRepository.save(document);
