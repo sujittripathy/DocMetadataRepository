@@ -4,6 +4,7 @@ Search Document by Pol# (GET)                   http://localhost:9090/pc/search/
 Search All Documents                            http://localhost:9090/pc/search/document/all
 Delete (DELETE)                                 http://localhost:9090/pc/delete/document/db6dfb6a-2a4c-43b6-b7ec-b96feda4237a
 Add Document (POST)                             http://localhost:9090/pc/add/document
+Pagination in HTML                              http://localhost:9090/pc/search/document/page/html?page=1&size=40
 
 Swagger - url
 ----

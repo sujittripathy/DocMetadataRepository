@@ -14,6 +14,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
@@ -90,8 +91,12 @@ public class PCRestController {
                     produces = {MediaType.APPLICATION_JSON_VALUE}
                     )
     public @ResponseBody List<PolicyDocumentsDTO> findDocuments(@PathVariable String policy){
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         //Custom Implementation with Query
         List<PCDocumentModel> documents = pCDocumentRepository.findByUserPolicy(policy);
+        stopWatch.stop();
+        System.out.println("Total Time Taken to fetch policy via REST : "+stopWatch.getTotalTimeMillis());
         if(documents.size()==0) {
                 throw new NoDocsFoundException(policy);
         }

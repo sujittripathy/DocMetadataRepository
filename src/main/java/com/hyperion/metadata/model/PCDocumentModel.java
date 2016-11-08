@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Document(collection = "policy")
-@XmlRootElement(name = "document")
+//@XmlRootElement(name = "document")
 public class PCDocumentModel{
 
     public PCDocumentModel() {
