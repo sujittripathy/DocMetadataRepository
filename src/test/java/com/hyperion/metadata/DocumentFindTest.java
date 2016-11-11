@@ -5,23 +5,26 @@ import com.hyperion.metadata.model.PCDocumentModel;
 import com.hyperion.metadata.repository.PCDocumentRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest()
 
 public class DocumentFindTest {
 
     @Autowired
     PCDocumentRepository pCDocumentRepository;
 
-    //@Test
+    @Test
     public void findDocument(){
-        PCDocumentModel doc =
-                pCDocumentRepository.findByGuidEnvelopeId("999993f4-7fed-4d4b-bcd2-b7169fc1e05a");
-        System.out.println("<<< DOCUMENT DETAILS >>>"+doc.getAccountNumber());
+        List<PCDocumentModel> documents =
+                pCDocumentRepository.findByUserPolicy("NVPA0010010040");
+        System.out.println("<<< DOCUMENT DETAILS >>>"+documents.size());
 
     }
 }
