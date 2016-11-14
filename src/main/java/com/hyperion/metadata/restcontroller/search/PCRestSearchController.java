@@ -1,8 +1,10 @@
 package com.hyperion.metadata.restcontroller.search;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.hyperion.metadata.dto.PolicyDocumentsDTO;
 import com.hyperion.metadata.exception.NoDocsFoundException;
 import com.hyperion.metadata.model.PCDocumentModel;
+import com.hyperion.metadata.model.View;
 import com.hyperion.metadata.repository.PCDocumentRepository;
 import com.hyperion.metadata.response.DocumentResponse;
 import org.modelmapper.ModelMapper;
@@ -84,6 +86,13 @@ public class PCRestSearchController {
         return new ResponseEntity<List<PolicyDocumentsDTO>>(policyDocumentsDTOs,header, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/search/get/all", method = RequestMethod.GET)
+    @JsonView(View.Summary.class)
+    public Page<PCDocumentModel> getAllDocuments(Pageable pageable){
+        Page<PCDocumentModel> documents = pCDocumentRepository.findAll(pageable);
+
+        return documents;
+    }
 
     @ExceptionHandler(value = {NoDocsFoundException.class})
     public ResponseEntity<DocumentResponse> documentNotFound(NoDocsFoundException ndf){

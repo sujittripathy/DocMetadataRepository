@@ -4,7 +4,7 @@ Search Document by Pol# (GET)                   http://localhost:9090/pc/search/
 Return All Documents                            http://localhost:9090/pc/search/document/all
 Return only size & page                         http://localhost:9090/pc/search/document/all?page=1&size=20
 Pagination in HTML                              http://localhost:9090/pc/search/document/page/html?page=1&size=40
-
+With JSON View Query                            http://localhost:9090/pc/search/get/all?page=1&size=10
 Upload
 ------
 Add Document (POST)                             http://localhost:9090/pc/add/document

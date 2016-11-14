@@ -1,5 +1,6 @@
 package com.hyperion.metadata.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -8,14 +9,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
 @Document(collection = "policy")
-//@XmlRootElement(name = "document")
 public class PCDocumentModel{
 
     public PCDocumentModel() {
     }
 
     @Id
+    @JsonView(View.Summary.class)
     private int docID;
+    @JsonView(View.Summary.class)
     private String accountNumber;
     private String accountId;
     private String activity;
@@ -26,6 +28,7 @@ public class PCDocumentModel{
     private String name;
     private String job;
     private String policy;
+    @JsonView(View.Summary.class)
     private String policyNumber;
     private String policyperiod;
     private String securitytype;
