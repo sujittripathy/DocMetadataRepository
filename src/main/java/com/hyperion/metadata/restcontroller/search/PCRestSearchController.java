@@ -86,8 +86,8 @@ public class PCRestSearchController {
         return new ResponseEntity<List<PolicyDocumentsDTO>>(policyDocumentsDTOs,header, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/search/get/all", method = RequestMethod.GET)
     @JsonView(View.Summary.class)
+    @RequestMapping(value = "/search/get/all", method = RequestMethod.GET)
     public Page<PCDocumentModel> getAllDocuments(Pageable pageable){
         Page<PCDocumentModel> documents = pCDocumentRepository.findAll(pageable);
 
