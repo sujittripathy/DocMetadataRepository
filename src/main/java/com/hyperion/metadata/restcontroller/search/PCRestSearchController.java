@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.hyperion.metadata.dto.PolicyDocumentsDTO;
 import com.hyperion.metadata.exception.NoDocsFoundException;
 import com.hyperion.metadata.model.PCDocumentModel;
+import com.hyperion.metadata.model.PCDocumentModelResource;
 import com.hyperion.metadata.model.View;
 import com.hyperion.metadata.repository.PCDocumentRepository;
 import com.hyperion.metadata.response.DocumentResponse;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 
 @RestController()
 @RequestMapping("/pc")
@@ -93,6 +96,30 @@ public class PCRestSearchController {
 
         return documents;
     }
+
+    ///////////// ************** [HATEOS URL]   /////////////////
+    @RequestMapping(value = "/search/get/document/{guid}", method = RequestMethod.GET)
+    public PCDocumentModelResource findDocumentByGUID(@PathVariable String guid){
+        PCDocumentModel document = pCDocumentRepository.findByGuidEnvelopeId(guid);
+        PCDocumentModelResource resource = new PCDocumentModelResource(document);
+        resource.add(linkTo(methodOn(PCRestSearchController.class).findDocumentByGUID(guid)).withSelfRel());
+        return resource;
+    }
+    @RequestMapping(value = "/search/get/document/all", method = RequestMethod.GET)
+    public List<PCDocumentModelResource> findAllDocuments(){
+        List<PCDocumentModel> documentList = pCDocumentRepository.findAll();
+        List<PCDocumentModelResource> resourceList = new ArrayList<>();
+        documentList.forEach(document -> {
+            PCDocumentModelResource resource = new PCDocumentModelResource(document);
+            resource.add(linkTo(methodOn(PCRestSearchController.class).
+                                findDocumentByGUID(document.getGuidEnvelopeId())).withSelfRel());
+            resource.add(linkTo(methodOn(PCRestSearchController.class).
+                                findAllDocuments()).withRel("all-document"));
+            resourceList.add(resource);
+        });
+        return resourceList;
+    }
+    ///////////// **************    /////////////////
 
     @ExceptionHandler(value = {NoDocsFoundException.class})
     public ResponseEntity<DocumentResponse> documentNotFound(NoDocsFoundException ndf){
