@@ -8,6 +8,7 @@ import com.hyperion.metadata.model.PCDocumentModelResource;
 import com.hyperion.metadata.model.View;
 import com.hyperion.metadata.repository.PCDocumentRepository;
 import com.hyperion.metadata.response.DocumentResponse;
+import com.hyperion.metadata.service.DocumentService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,6 +37,8 @@ public class PCRestSearchController {
     private DocumentResponse documentResponseObj;
     @Autowired
     private PCDocumentRepository pCDocumentRepository;
+    @Autowired
+    DocumentService documentService;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -93,16 +96,18 @@ public class PCRestSearchController {
     @RequestMapping(value = "/search/get/all", method = RequestMethod.GET)
     public Page<PCDocumentModel> getAllDocuments(Pageable pageable){
         Page<PCDocumentModel> documents = pCDocumentRepository.findAll(pageable);
-
         return documents;
     }
 
     ///////////// ************** [HATEOS URL]   /////////////////
     @RequestMapping(value = "/search/get/document/{guid}", method = RequestMethod.GET)
     public PCDocumentModelResource findDocumentByGUID(@PathVariable String guid){
-        PCDocumentModel document = pCDocumentRepository.findByGuidEnvelopeId(guid);
+        PCDocumentModel document = documentService.findDocumentByGUID(guid);
         PCDocumentModelResource resource = new PCDocumentModelResource(document);
-        resource.add(linkTo(methodOn(PCRestSearchController.class).findDocumentByGUID(guid)).withSelfRel());
+        resource.add(linkTo(methodOn(PCRestSearchController.class).
+                findDocumentByGUID(guid)).withSelfRel());
+        resource.add(linkTo(methodOn(PCRestSearchController.class).
+                findAllDocuments()).withRel("all-document"));
         return resource;
     }
     @RequestMapping(value = "/search/get/document/all", method = RequestMethod.GET)

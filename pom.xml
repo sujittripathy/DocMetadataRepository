@@ -61,10 +61,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
             <version>1.4.1.RELEASE</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.github.jmnarloch</groupId>
             <artifactId>modelmapper-spring-boot-starter</artifactId>
@@ -91,6 +91,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-rest-hal-browser</artifactId>
         </dependency>
     </dependencies>
 

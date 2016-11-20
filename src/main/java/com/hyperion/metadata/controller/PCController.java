@@ -3,6 +3,7 @@ package com.hyperion.metadata.controller;
 import com.hyperion.metadata.dto.PolicyDocumentsDTO;
 import com.hyperion.metadata.model.PCDocumentModel;
 import com.hyperion.metadata.repository.PCDocumentRepository;
+import com.hyperion.metadata.service.DocumentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +24,8 @@ public class PCController {
 
     @Autowired
     PCDocumentRepository pCDocumentRepository;
-    @Autowired
-    private ModelMapper modelMapper;
 
-    @Bean
-    public ModelMapper modelMapper(){
-        return new ModelMapper();
-    }
-
-    @RequestMapping(value = "/pc/search/document/all/html",
+    /*@RequestMapping(value = "/pc/search/document/all/html",
                     method = RequestMethod.GET)
     public String findAllDocuments(Model model){
         StopWatch stopWatch = new StopWatch();
@@ -46,9 +42,9 @@ public class PCController {
         model.addAttribute("documentCount",filterDocuments.size());
         model.addAttribute("policyDocumentList",filterDocuments);
         return "ViewOnBaseDocuments";
-    }
+    }*/
     @RequestMapping(value = "/pc/search/document/page/html",
-            method = RequestMethod.GET)
+                    method = RequestMethod.GET)
     public String findDocumentsWPaginated(Model model, Pageable pageable){
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -57,9 +53,5 @@ public class PCController {
         model.addAttribute("policyDocumentList",documents);
         return "ViewOnBaseDocuments";
     }
-    @RequestMapping(value = "/pc/home",
-            method = RequestMethod.GET)
-    public String getHome(){
-        return "home";
-    }
+
 }
